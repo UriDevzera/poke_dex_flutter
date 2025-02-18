@@ -1,6 +1,7 @@
+import 'package:poke_dex/models/pokemon_list_model.dart';
+import 'package:poke_dex/models/pokemon_list_summary.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:poke_dex/models/pokemon_list_model.dart';
 
 class PokeHomePage extends StatelessWidget {
   const PokeHomePage({super.key});
@@ -15,13 +16,11 @@ class PokeHomePage extends StatelessWidget {
     );
   }
 
-  Future<List<String>> _getPokemons() async {
+  Future<List<PokemonListSummary>> _getPokemons() async {
     final dio = Dio();
     final response = await dio.get('https://pokeapi.co/api/v2/pokemon');
-    var model = PokemonListModel.fromMap(response.data);
-    var listPokemon = ["Charmander", "Bubalsauro", "Mewtwo", "Picachu"];
-    await Future.delayed(Duration(seconds: 4));
-    return listPokemon;
+    var model = PokemonRequest.fromMap(response.data);
+    return model.results;
   }
 
   Widget _buildBody() {
@@ -37,7 +36,7 @@ class PokeHomePage extends StatelessWidget {
               itemCount: lista.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(lista[index]),
+                  title: Text(lista[index].name ?? ""),
                 );
               });
         }

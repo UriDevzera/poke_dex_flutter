@@ -1,0 +1,2 @@
+C:/Users/02570658065/Downloads/repo/poke_dex_flutter/poke_dex/android/app/.cxx/Debug/1sy6p425/x86/CMakeFiles/edit_cache.dir
+C:/Users/02570658065/Downloads/repo/poke_dex_flutter/poke_dex/android/app/.cxx/Debug/1sy6p425/x86/CMakeFiles/rebuild_cache.dir
