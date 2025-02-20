@@ -1,4 +1,4 @@
-import 'package:poke_dex/pages/splash_page.dart';
+import 'package:poke_dex/pages/poke_home_page.dart';
 import 'package:flutter/material.dart';
 
 class PokeDexApp extends StatelessWidget {
@@ -12,7 +12,7 @@ class PokeDexApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SplashPage(),
+      home: const PokeHomePage(),
     );
   }
 }

@@ -10,7 +10,8 @@ class PokeHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Poke Home"),
+        title: Text("Pokemon List"),
+        centerTitle: true,
       ),
       body: _buildBody(),
     );
@@ -19,7 +20,7 @@ class PokeHomePage extends StatelessWidget {
   Future<List<PokemonListSummary>> _getPokemons() async {
     final dio = Dio();
     final response = await dio.get('https://pokeapi.co/api/v2/pokemon');
-    var model = PokemonRequest.fromMap(response.data);
+    var model = await PokemonRequest.fromMap(response.data);
     return model.results;
   }
 
@@ -32,16 +33,62 @@ class PokeHomePage extends StatelessWidget {
           if (lista == null || lista.isEmpty) {
             return Text("Nenhum pokemon encontrado!");
           }
-          return ListView.builder(
-              itemCount: lista.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(lista[index].name ?? ""),
-                );
-              });
+          return _buildListViewBuilder(lista);
         }
-        return CircularProgressIndicator();
+        return Center(child: CircularProgressIndicator());
       },
+    );
+  }
+
+  Widget _buildListViewBuilder(List<PokemonListSummary> lista) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 300,
+          childAspectRatio: 2 / 2,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
+        ),
+        itemCount: lista.length,
+        itemBuilder: (BuildContext ctx, index) {
+          return _buildCard(lista[index]);
+        },
+      ),
+    );
+  }
+
+  String capitalize(String value) {
+    if (value.trim().isEmpty) return "";
+    return "${value[0].toUpperCase()}${value.substring(1).toLowerCase()}";
+  }
+
+  Widget _buildCard(PokemonListSummary pokemonSummury) {
+    var listUrl = pokemonSummury.url?.split("/");
+    listUrl?.removeLast();
+    var id = listUrl?.last;
+    return Card(
+      child: InkWell(
+        onTap: () {},
+        child: SizedBox(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                pokemonSummury.image ?? SizedBox(),
+                Card(
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Text(
+                      capitalize(pokemonSummury.name ?? ""),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

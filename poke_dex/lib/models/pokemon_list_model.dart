@@ -13,12 +13,12 @@ class PokemonRequest {
     required this.results,
   });
 
-  factory PokemonRequest.fromMap(Map<String, dynamic> map) {
+  static Future<PokemonRequest> fromMap(Map<String, dynamic> map) async {
     return PokemonRequest(
       count: map["count"] as int,
       next: map["next"] as String,
       previous: map["previous"] as String?,
-      results: PokemonListSummary.fromMapList(map["results"]),
+      results: await PokemonListSummary.fromMapList(map["results"]),
     );
   }
 }
