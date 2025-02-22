@@ -1,10 +1,10 @@
-import 'package:poke_dex/models/pokemon_list_summary.dart';
+import 'package:poke_dex/models/pokemon_sumarry.dart';
 
 class PokemonRequest {
   final int count;
   final String? next;
   final String? previous;
-  final List<PokemonListSummary> results;
+  final List<PokemonSummary> results;
 
   PokemonRequest({
     required this.count,
@@ -13,12 +13,12 @@ class PokemonRequest {
     required this.results,
   });
 
-  static Future<PokemonRequest> fromMap(Map<String, dynamic> map) async {
+  static PokemonRequest fromMap(Map<String, dynamic> map) {
     return PokemonRequest(
       count: map["count"] as int,
-      next: map["next"] as String,
+      next: map["next"] as String?,
       previous: map["previous"] as String?,
-      results: await PokemonListSummary.fromMapList(map["results"]),
+      results: PokemonSummary.fromMapList(map["results"]),
     );
   }
 }

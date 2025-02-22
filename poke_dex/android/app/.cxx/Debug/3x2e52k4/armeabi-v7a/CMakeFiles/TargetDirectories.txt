@@ -1,0 +1,2 @@
+C:/Users/uriel/OneDrive/Documentos/repo/poke_dex_flutter/poke_dex/android/app/.cxx/Debug/3x2e52k4/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/uriel/OneDrive/Documentos/repo/poke_dex_flutter/poke_dex/android/app/.cxx/Debug/3x2e52k4/armeabi-v7a/CMakeFiles/rebuild_cache.dir

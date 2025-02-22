@@ -1,46 +1,27 @@
-import 'package:poke_dex/models/pokemon_list_model.dart';
-import 'package:poke_dex/models/pokemon_list_summary.dart';
-import 'package:dio/dio.dart';
+import 'package:poke_dex/models/pokemon_sumarry.dart';
 import 'package:flutter/material.dart';
 
 class PokeHomePage extends StatelessWidget {
-  const PokeHomePage({super.key});
+  final List<PokemonSummary> pokemonList;
+
+  const PokeHomePage({super.key, required this.pokemonList});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Pokemon List"),
-        centerTitle: true,
-      ),
       body: _buildBody(),
     );
   }
 
-  Future<List<PokemonListSummary>> _getPokemons() async {
-    final dio = Dio();
-    final response = await dio.get('https://pokeapi.co/api/v2/pokemon');
-    var model = await PokemonRequest.fromMap(response.data);
-    return model.results;
-  }
-
   Widget _buildBody() {
-    return FutureBuilder(
-      future: _getPokemons(),
-      builder: (context, reponse) {
-        if (reponse.connectionState == ConnectionState.done) {
-          var lista = reponse.data;
-          if (lista == null || lista.isEmpty) {
-            return Text("Nenhum pokemon encontrado!");
-          }
-          return _buildListViewBuilder(lista);
-        }
-        return Center(child: CircularProgressIndicator());
-      },
-    );
+    if (pokemonList.isEmpty) {
+      //TODO EMBELEZAR ISSO AQUI
+      return Text("Nenhum pokemon encontrado!");
+    }
+    return _buildListViewBuilder();
   }
 
-  Widget _buildListViewBuilder(List<PokemonListSummary> lista) {
+  Widget _buildListViewBuilder() {
     return Padding(
       padding: EdgeInsets.all(16),
       child: GridView.builder(
@@ -50,9 +31,9 @@ class PokeHomePage extends StatelessWidget {
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
         ),
-        itemCount: lista.length,
+        itemCount: pokemonList.length,
         itemBuilder: (BuildContext ctx, index) {
-          return _buildCard(lista[index]);
+          return _buildCard(pokemonList[index]);
         },
       ),
     );
@@ -63,7 +44,7 @@ class PokeHomePage extends StatelessWidget {
     return "${value[0].toUpperCase()}${value.substring(1).toLowerCase()}";
   }
 
-  Widget _buildCard(PokemonListSummary pokemonSummury) {
+  Widget _buildCard(PokemonSummary pokemonSummury) {
     var listUrl = pokemonSummury.url?.split("/");
     listUrl?.removeLast();
     var id = listUrl?.last;
@@ -76,7 +57,7 @@ class PokeHomePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                pokemonSummury.image ?? SizedBox(),
+                //pokemonSummury.image ?? SizedBox(),
                 Padding(
                   padding: EdgeInsets.all(8),
                   child: FittedBox(
