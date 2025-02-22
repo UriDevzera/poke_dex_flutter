@@ -31,8 +31,8 @@ class PokemonListSummary {
       url: map["url"] as String?,
       image: SvgPicture.network(
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/$id.svg",
-        width: 80,
-        height: 80,
+        width: 24,
+        height: 24,
       ),
     );
   }

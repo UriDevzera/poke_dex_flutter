@@ -39,6 +39,8 @@ dependencies:
 
   flutter_svg: ^2.0.17
 
+  rive: 0.13.20
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

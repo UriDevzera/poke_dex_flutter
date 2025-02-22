@@ -45,10 +45,10 @@ class PokeHomePage extends StatelessWidget {
       padding: EdgeInsets.all(16),
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 300,
-          childAspectRatio: 2 / 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
+          maxCrossAxisExtent: 100,
+          childAspectRatio: 8 / 8,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
         ),
         itemCount: lista.length,
         itemBuilder: (BuildContext ctx, index) {
@@ -68,6 +68,7 @@ class PokeHomePage extends StatelessWidget {
     listUrl?.removeLast();
     var id = listUrl?.last;
     return Card(
+      clipBehavior: Clip.hardEdge,
       child: InkWell(
         onTap: () {},
         child: SizedBox(
@@ -76,9 +77,10 @@ class PokeHomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 pokemonSummury.image ?? SizedBox(),
-                Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: FittedBox(
+                    fit: BoxFit.fitHeight,
                     child: Text(
                       capitalize(pokemonSummury.name ?? ""),
                     ),
