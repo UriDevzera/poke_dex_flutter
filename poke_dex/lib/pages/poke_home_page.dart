@@ -1,8 +1,10 @@
+import 'package:flutter_svg/svg.dart';
+import 'package:poke_dex/models/pokemon.dart';
 import 'package:poke_dex/models/pokemon_sumarry.dart';
 import 'package:flutter/material.dart';
 
 class PokeHomePage extends StatelessWidget {
-  final List<PokemonSummary> pokemonList;
+  final List<Pokemon> pokemonList;
 
   const PokeHomePage({super.key, required this.pokemonList});
 
@@ -44,12 +46,10 @@ class PokeHomePage extends StatelessWidget {
     return "${value[0].toUpperCase()}${value.substring(1).toLowerCase()}";
   }
 
-  Widget _buildCard(PokemonSummary pokemonSummury) {
-    var listUrl = pokemonSummury.url?.split("/");
-    listUrl?.removeLast();
-    var id = listUrl?.last;
+  Widget _buildCard(Pokemon pokemon) {
     return Card(
       clipBehavior: Clip.hardEdge,
+      color: pokemon.types.first.getColor().withOpacity(0.5),
       child: InkWell(
         onTap: () {},
         child: SizedBox(
@@ -57,14 +57,22 @@ class PokeHomePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //pokemonSummury.image ?? SizedBox(),
-                Padding(
-                  padding: EdgeInsets.all(8),
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text(
-                      capitalize(pokemonSummury.name ?? ""),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: FittedBox(
+                      child: SizedBox(
+                        child: SvgPicture.network(
+                          pokemon.image ?? "",
+                        ),
+                      ),
                     ),
+                  ),
+                ),
+                FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: Text(
+                    capitalize(pokemon.name),
                   ),
                 ),
               ],
